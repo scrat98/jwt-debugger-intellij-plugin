@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>com.github.scrat98.jwt.debugger.intellij.plugin</id>
+    <name>JWT Debugger</name>
+    <vendor email="artemgolovko98@gmail.com"
+            url="https://github.com/scrat98/jwt-debugger-intellij-plugin">Golovko Artem
+    </vendor>
+    <version>0.1</version>
+
+    <description><![CDATA[
+    JWT Debugger.
+    ]]></description>
+
+    <change-notes><![CDATA[
+      <em>0.1</em> First release
+    ]]>
+    </change-notes>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <toolWindow id="JWT Debugger"
+                    anchor="right"
+                    factoryClass="com.github.scrat98.jwt.debugger.intellij.plugin.JwtToolWindowFactory"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
