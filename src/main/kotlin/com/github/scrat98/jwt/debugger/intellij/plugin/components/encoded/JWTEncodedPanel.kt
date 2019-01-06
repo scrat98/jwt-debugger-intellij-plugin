@@ -1,12 +1,14 @@
 package com.github.scrat98.jwt.debugger.intellij.plugin.components.encoded
 
 import com.github.scrat98.jwt.debugger.intellij.plugin.utils.JWTHighlighters
+import com.intellij.ui.JBColor
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
 import javax.swing.BorderFactory
 import javax.swing.JPanel
 import javax.swing.JTextPane
 import javax.swing.SwingUtilities
+import javax.swing.border.LineBorder
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 import javax.swing.text.StyledDocument
@@ -18,7 +20,7 @@ data class EncodedJwt(
     val signature: String
 )
 
-fun createEmptyJwt() = EncodedJwt(
+fun createEmptyEncodedJwt() = EncodedJwt(
     "",
     "",
     "",
@@ -43,12 +45,13 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
       }
 
       override fun removeUpdate(e: DocumentEvent) {
+        updateState(e.document as StyledDocument)
         print("The text was removed")
       }
     })
   }
 
-  private var encodedJwt = createEmptyJwt()
+  private var encodedJwt = createEmptyEncodedJwt()
 
   init {
     border = BorderFactory.createTitledBorder("Encoded")
@@ -61,6 +64,14 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
     jwtEncodedTextArea.text = jwt
   }
 
+  fun enableInvalidJwtForm() {
+    border = BorderFactory.createTitledBorder(LineBorder(JBColor.RED), "Encoded")
+  }
+
+  fun disableInvalidJwtForm() {
+    border = BorderFactory.createTitledBorder(LineBorder(JBColor.BLACK), "Encoded")
+  }
+
   private fun updateState(document: StyledDocument) {
     val jwtToken = document.getText(0, document.length)
     val split = jwtToken.split(".", limit = 3)
@@ -69,13 +80,13 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
     val payload = split.elementAtOrElse(1) { "" }
     val signature = split.elementAtOrElse(2) { "" }
 
-    val encodedJwt = EncodedJwt(
+    val newEncodedJwt = EncodedJwt(
         jwtToken,
         header,
         payload,
         signature)
-    firePropertyChange(ENCODED_JWT_PROPERTY, encodedJwt, encodedJwt)
-    this.encodedJwt = encodedJwt
+    firePropertyChange(ENCODED_JWT_PROPERTY, encodedJwt, newEncodedJwt)
+    encodedJwt = newEncodedJwt
   }
 
   private fun highlightDocument(document: StyledDocument) {

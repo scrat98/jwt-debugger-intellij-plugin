@@ -18,4 +18,8 @@ class HeaderDecodedPanel : JPanel(BorderLayout()) {
       border = BorderFactory.createEmptyBorder()
     }, BorderLayout.CENTER)
   }
+
+  fun setHeaderJson(headerJson: String) {
+    headerTextArea.text = headerJson
+  }
 }

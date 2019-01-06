@@ -18,4 +18,8 @@ class PayloadDecodedPanel : JPanel(BorderLayout()) {
       border = BorderFactory.createEmptyBorder()
     }, BorderLayout.CENTER)
   }
+
+  fun setPayloadJson(payloadJson: String) {
+    payloadTextArea.text = payloadJson
+  }
 }
