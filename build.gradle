@@ -8,6 +8,7 @@ version '0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 sourceSets {
@@ -17,7 +18,7 @@ sourceSets {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile "com.fasterxml.jackson.core:jackson-core:2.7.3"
+    implementation 'com.beust:klaxon:5.0.1'
 }
 
 compileKotlin {

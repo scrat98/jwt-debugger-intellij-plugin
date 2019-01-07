@@ -32,23 +32,25 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
     const val ENCODED_JWT_PROPERTY = "encodedJwt"
   }
 
+  private val documentListener = object: DocumentListener {
+    override fun changedUpdate(e: DocumentEvent) {
+      print("The text attributes was changed")
+    }
+
+    override fun insertUpdate(e: DocumentEvent) {
+      print("There was character inserted")
+      updateState(e.document as StyledDocument)
+      highlightDocument(e.document as StyledDocument)
+    }
+
+    override fun removeUpdate(e: DocumentEvent) {
+      updateState(e.document as StyledDocument)
+      print("The text was removed")
+    }
+  }
+
   private val jwtEncodedTextArea = JTextPane().apply {
-    document.addDocumentListener(object : DocumentListener {
-      override fun changedUpdate(e: DocumentEvent) {
-        print("The text attributes was changed")
-      }
-
-      override fun insertUpdate(e: DocumentEvent) {
-        print("There was character inserted")
-        updateState(e.document as StyledDocument)
-        highlightDocument(e.document as StyledDocument)
-      }
-
-      override fun removeUpdate(e: DocumentEvent) {
-        updateState(e.document as StyledDocument)
-        print("The text was removed")
-      }
-    })
+    document.addDocumentListener(documentListener)
   }
 
   private var encodedJwt = createEmptyEncodedJwt()
@@ -60,8 +62,14 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
     }, BorderLayout.CENTER)
   }
 
-  fun setJwt(jwt: String) {
-    jwtEncodedTextArea.text = jwt
+  fun setEncodedJwt(jwt: EncodedJwt) {
+    jwtEncodedTextArea.apply {
+      document.removeDocumentListener(documentListener)
+      text = jwt.jwtToken
+      encodedJwt = jwt
+      highlightDocument(document as StyledDocument)
+      document.addDocumentListener(documentListener)
+    }
   }
 
   fun enableInvalidJwtForm() {
@@ -85,8 +93,9 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
         header,
         payload,
         signature)
-    firePropertyChange(ENCODED_JWT_PROPERTY, encodedJwt, newEncodedJwt)
+    val oldEncodedJwt = encodedJwt
     encodedJwt = newEncodedJwt
+    firePropertyChange(ENCODED_JWT_PROPERTY, oldEncodedJwt, newEncodedJwt)
   }
 
   private fun highlightDocument(document: StyledDocument) {

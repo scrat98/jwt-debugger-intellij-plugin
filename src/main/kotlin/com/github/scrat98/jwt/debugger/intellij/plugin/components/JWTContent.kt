@@ -26,7 +26,7 @@ class JWTContent : JPanel(BorderLayout()) {
         JWTEncodedPanel.ENCODED_JWT_PROPERTY
     ) { event ->
       val encodedJwt = event.newValue as EncodedJwt
-      val jwtIsValid = jwtDecodedPanel.setAndValidateJwt(encodedJwt)
+      val jwtIsValid = jwtDecodedPanel.setAndValidateEncodedJwt(encodedJwt)
 
       if (jwtIsValid) {
         jwtEncodedPanel.disableInvalidJwtForm()
@@ -37,16 +37,14 @@ class JWTContent : JPanel(BorderLayout()) {
   }
 
   private fun addPropertyListenerOnJwtDecodedPanel() {
-    jwtEncodedPanel.addPropertyChangeListener(
-        JWTDecodedPanel.DECODED_JWT_HEADER_PROPERTY
+    jwtDecodedPanel.addPropertyChangeListener(
+        JWTDecodedPanel.DECODED_JWT_PROPERTY
     ) { event ->
-
-    }
-
-    jwtEncodedPanel.addPropertyChangeListener(
-        JWTDecodedPanel.DECODED_JWT_PAYLOAD_PROPERTY
-    ) { event ->
-
+      val encodedJwt = event.newValue as EncodedJwt
+      jwtEncodedPanel.apply {
+        disableInvalidJwtForm()
+        setEncodedJwt(encodedJwt)
+      }
     }
   }
 }
