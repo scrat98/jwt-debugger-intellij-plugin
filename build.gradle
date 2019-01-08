@@ -19,6 +19,8 @@ sourceSets {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.beust:klaxon:5.0.1'
+    implementation 'com.auth0:java-jwt:3.5.0'
+    compile 'commons-codec:commons-codec:1.11'
 }
 
 compileKotlin {

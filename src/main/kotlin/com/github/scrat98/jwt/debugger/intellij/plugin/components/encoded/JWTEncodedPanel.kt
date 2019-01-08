@@ -32,7 +32,7 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
     const val ENCODED_JWT_PROPERTY = "encodedJwt"
   }
 
-  private val documentListener = object: DocumentListener {
+  private val documentListener = object : DocumentListener {
     override fun changedUpdate(e: DocumentEvent) {
       print("The text attributes was changed")
     }
@@ -78,6 +78,11 @@ class JWTEncodedPanel : JPanel(BorderLayout()) {
 
   fun disableInvalidJwtForm() {
     border = BorderFactory.createTitledBorder(LineBorder(JBColor.BLACK), "Encoded")
+  }
+
+  fun resetJwt() {
+    jwtEncodedTextArea.text =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o"
   }
 
   private fun updateState(document: StyledDocument) {

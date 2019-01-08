@@ -1,12 +1,12 @@
 package com.github.scrat98.jwt.debugger.intellij.plugin.components.decoded
 
+import com.github.scrat98.jwt.debugger.intellij.plugin.utils.CodecUtils
 import com.github.scrat98.jwt.debugger.intellij.plugin.utils.JWTColors
 import com.github.scrat98.jwt.debugger.intellij.plugin.utils.JsonConverter
 import com.intellij.ui.DocumentAdapter
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.JBScrollPane
 import java.awt.BorderLayout
-import java.util.*
 import javax.swing.BorderFactory
 import javax.swing.JPanel
 import javax.swing.JTextPane
@@ -64,7 +64,7 @@ class HeaderDecodedPanel : JPanel(BorderLayout()) {
   }
 
   fun getEncodedHeader(): String {
-    val jsonString = JsonConverter.tryConvertToJsonFromString(headerTextValue)
-    return Base64.getEncoder().encodeToString(jsonString.toByteArray())
+    val jsonString = JsonConverter.tryConvertToJsonFromString(headerTextValue).toJsonString()
+    return CodecUtils.encodeToBase64(jsonString)
   }
 }

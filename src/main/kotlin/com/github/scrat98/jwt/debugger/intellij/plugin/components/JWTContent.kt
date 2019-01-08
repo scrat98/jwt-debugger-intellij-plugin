@@ -19,6 +19,7 @@ class JWTContent : JPanel(BorderLayout()) {
       firstComponent = jwtEncodedPanel
       secondComponent = jwtDecodedPanel
     }, BorderLayout.CENTER)
+    jwtEncodedPanel.resetJwt()
   }
 
   private fun addPropertyListenerOnJwtEncodedPanel() {

@@ -2,28 +2,22 @@ package com.github.scrat98.jwt.debugger.intellij.plugin.utils
 
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
-import java.util.*
 
 class JsonConverter {
   companion object {
     @Throws(Exception::class)
-    fun tryConvertToJsonFromBase64String(base64String: String): String =
-        tryConvertToJsonFromString(String(Base64.getDecoder().decode(base64String)))
+    fun tryConvertToJsonFromBase64String(base64String: String): JsonObject =
+        tryConvertToJsonFromString(CodecUtils.decodeFromBase64(base64String))
 
     @Throws(Exception::class)
-    fun tryConvertToJsonFromString(jsonString: String): String {
+    fun tryConvertToJsonFromString(jsonString: String): JsonObject {
       val parser = Parser.default()
       val stringBuilder = StringBuilder(jsonString)
-      val json = parser.parse(stringBuilder) as JsonObject
-      return json.toJsonString(true)
+      return parser.parse(stringBuilder) as JsonObject
     }
 
-    @Throws(Exception::class)
-    fun tryConvertToJsonFromBytes(bytes: ByteArray): String =
-        tryConvertToJsonFromString(String(bytes))
-
     fun jsonIsValidFromBase64String(base64String: String): Boolean =
-        jsonIsValidFromString(String(Base64.getDecoder().decode(base64String)))
+        jsonIsValidFromString(CodecUtils.decodeFromBase64(base64String))
 
     fun jsonIsValidFromString(jsonString: String): Boolean {
       return try {
@@ -33,8 +27,5 @@ class JsonConverter {
         false
       }
     }
-
-    fun jsonIsValidFromBytes(bytes: ByteArray): Boolean =
-        jsonIsValidFromString(String(bytes))
   }
 }
