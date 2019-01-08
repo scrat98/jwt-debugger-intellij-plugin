@@ -7,11 +7,11 @@
     <version>0.1</version>
 
     <description><![CDATA[
-    JWT Debugger.
+    JWT Debugger. You could easily decode and encode JWT and verify them.
     ]]></description>
 
     <change-notes><![CDATA[
-      <em>0.1</em> First release
+      First release. Implemented base layout and features.
     ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html

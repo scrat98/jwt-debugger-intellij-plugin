@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.github.scrat98'
-version '0.1-SNAPSHOT'
+version '0.1'
 
 repositories {
     mavenCentral()
@@ -31,8 +31,12 @@ compileTestKotlin {
 }
 intellij {
     version '2018.3.1'
+    pluginName 'JWT Debugger'
 }
 patchPluginXml {
     changeNotes """
-      <em>0.1</em>First release"""
+      First release. Implemented base layout and features"""
+}
+publishPlugin {
+    token intellijPublishToken
 }
